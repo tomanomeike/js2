@@ -9,34 +9,31 @@ const paragraph = "There are many variations of passages of Lorem Ipsum availabl
 function textArray(text){
 
     const wordCounts = [];
-    
-    
+    const myArray = [];
     const text1 = text.toLowerCase();
     const words = text1.replace(/[.,\/;:]/g,"")
                       .replace(/\d+/g, '')
                       .replace(/\s{2,}/g," ")
                       .split(" ")
 
-    // const myArray = new Array(words);
     words.forEach((word) =>{
     if(!wordCounts[word]){
         wordCounts[word]=1;
     }
     else{
         wordCounts[word]++;
+        const wordLenght = word.length;
+        const count = wordCounts[word];
+        const textObject = {word: `${word}`, wordLenght: `${wordLenght}`, count:`${count}`};
+        myArray.push(textObject);     
     }
-    const wordLenght = word.length;
+    
     // console.log(wordLenght);
     // console.log(word);
-    const textObject = {word: `${word}`, wordLenght: `${wordLenght}`, count:`${wordCounts}`};
-    console.log(textObject);
-    })
-  
-    
-    
-    return wordCounts;
-   
-
+    // console.log(wordCounts);
+    })  
+    console.log(myArray);
+    return myArray;
 }
 const counts = textArray(paragraph);
 // console.log(counts);
