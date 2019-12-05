@@ -8,7 +8,7 @@ const paragraph = "There are many variations of passages of Lorem Ipsum availabl
 
 function textArray(text){
 
-    const wordCounts = [];
+    const wordCounts = []; // <- cia turetu buti objektas, o ne masyvas. 
     const myArray = [];
     const text1 = text.toLowerCase();
     const words = text1.replace(/[.,\/;:]/g,"")
@@ -17,24 +17,50 @@ function textArray(text){
                       .split(" ")
 
     words.forEach((word) =>{
-    if(!wordCounts[word]){
-        wordCounts[word]=1;
-    }
-    else{
-        wordCounts[word]++;
-        const wordLenght = word.length;
-        const count = wordCounts[word];
-        const textObject = {word: `${word}`, wordLenght: `${wordLenght}`, count:`${count}`};
-        myArray.push(textObject);     
-    }
+        if(!wordCounts[word]){ // <- Objekta galima pasiekti per `key` {myKey: myValue}; o  masyvus galima pasiekti per ju indeksus const a = ['a', 'b', 'c'] => a[0] === 'a' 
+            wordCounts[word]=1;
+        }
+        else{
+            wordCounts[word]++;
+            const wordLenght = word.length;
+            const count = wordCounts[word];
+            const textObject = {word: `${word}`, wordLenght: `${wordLenght}`, count:`${count}`};
+            myArray.push(textObject);     
+        }
     
     // console.log(wordLenght);
     // console.log(word);
     // console.log(wordCounts);
     })  
-    console.log(myArray);
+    // console.log(myArray);
     return myArray;
 }
 const counts = textArray(paragraph);
-// console.log(counts);
+
+
+function getWords(text) {
+    const words = text.toLowerCase()
+                    .replace(/[.,\/;:]/g,"")
+                    .replace(/\d+/g, '')
+                    .replace(/\s{2,}/g," ")
+                    .split(" ")
+
+    const counts = {};
+
+    words.forEach((word) => {
+        counts[word] = counts[word] ? counts[word] + 1 : 1;
+    });
+
+    const mappedWords = Object.entries(counts)
+        .map(([word, count]) => ({
+            word,
+            wordLengh: word.length,
+            count,
+        }));
+    
+    return mappedWords;
+}
+
+const mappedWords = getWords(paragraph);
+console.log(mappedWords)
 
